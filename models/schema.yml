@@ -7,7 +7,46 @@ sources:
     tables:
       - name: sales
         identifier: raw_gz_sales
+        description: orders_id and products_id one row.
+        columns:
+          - name: date_date
+            description: date of sale
+          - name: orders_id
+            description: foreign key to ship
+          - name: products_id
+            description: foreign key to product 
+          - name: revenue
+            description: total revenue
+          - name: quantity
+            description: quantity of goods sold
+          - name: date_date
+            description: orders_id and products_id new column
+            tests:
+              - unique:
+                 column_name:"(orders_id || '-' || products_id)"      
       - name: product
         identifier: raw_gz_product
+        description: Each products_id has a purchase_price
+        columns:
+          - name: products_id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
+            description: price of purchase of product
       - name: ship
         identifier: raw_gz_ship
+        description: orders_id is associated to log_cost, shipping_fee, and ship_cost
+        columns:
+          - name: orders_id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+          - name: log_cost
+            description: logistical cost
+          - name: shipping_fee
+            description: shipping fee 
+          - name: ship_cost
+            description: shipping cost
